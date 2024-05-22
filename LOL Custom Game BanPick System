@@ -1,0 +1,174 @@
+import tkinter as tk
+import random
+
+# 全英雄列表
+all_champions = ["剑魔-天神下凡","阿璃-刮痧狐","阿卡丽-暗影女拳","阿克尚-印度男","阿利斯塔-老牛","阿木木-绷带男","艾尼维亚-冰鸡","安妮-火女","亚非64-月男",
+                 "爱射-含冰射手","索尔-龙王","阿滋儿-黄金脆皮鸡","巴德-呜哇昂","被尔围死-八爪鱼","布里茨-抓男","布兰德-火男","不聋-盾男",
+                 "布莱雅-新疯狗","凯特琳-女警","卡蜜儿-三笠","卡西奥佩娅-蛇女","科加斯-大虫子","库奇-打飞机","达瑞斯-质检员","戴安娜-月女",
+                 "蒙多-大娘儿们","德莱文-阿特","艾克-刺儿头","伊利斯-蜘蛛","伊芙琳-寡妇","Ez-小黄毛","肥的提克-稻草人","菲奥娜-JJ",
+                 "菲兹-小鱼","加里奥-爸爸抱抱","肛普朗克-船长","盖伦-gay轮","纳尔-如来神掌","古拉加斯-桶男","格雷福斯-男枪","关-剪刀妹妹","赫卡里姆-马人",
+                 "黑默定格-大头","俄洛依-章鱼姨","艾瑞利亚-刀妹","艾翁-鲁迅","珈衲-风女","嘉文-毒龙钻","贾克斯-武器","杰西-我黑切呐！",
+                 "烬-望远镜","金克斯-哒哒哒","凯莎妹妹","卡莉斯塔-滑板鞋","卡尔马-萨and萨","卡尔萨斯-死歌","卡萨丁-JB脸","卡特琳娜-转女","凯尔-天使",
+                 "凯隐-明凯","凯南-电耗子","卡兹克-飞天刀螂","千珏-千玉","克烈-话痨骑士","克格莫-深渊大嘴","奎桑提-尼哥","勒布朗-妖鸡",
+                 "李青-忙僧","蕾欧娜-日女","莉莉娅-鹿女","丽桑卓-冰女","卢锡安-奥巴马","露露","拉克丝-光女","莫菲特-石头人",
+                 "马儿扎哈-蚂蚱","茂凯-千手柱间","易-老疯狗","米利欧-丁真","好运姐-啊哈哈","莫得凯撒-铁男","莫干那",
+                 "纳菲利-狗子","娜美-唤潮鲛肌","内色斯-狗头","诺提勒斯-泰坦","妮寇-变形人","奶大丽-豹女","尼拉-印度女","诺克顿-影魔",
+                 "努努-粪球","奥拉夫-疯狗bro","奥丽安娜-发条","奥恩-羊来","潘森-扎男","波比-波比","派克-潜水员","琪亚娜-超模",
+                 "奎阴-鸟人","洛-羽毛男","拉莫斯-王八","雷克塞-挖掘机","瑞尔-铁娘儿们","瑞纳塔","雷尼克顿-鳄鱼","雷恩加尔-大猫",
+                 "瑞雯雯-龟速QA","兰宝-烧烤王","瑞兹-大魔王","沙弥拉","瑟撞你-猪妹","塞纳","萨乐芬妮-亲闺女","塞特-蒋劲夫","萨科-小丑",
+                 "肾-暮肛之眼儿","莎瓦纳-龙女","辛吉德-炼金","塞恩-八十！八十！","希维尔-轮子妈","斯卡纳-蝎子","斯矛戈-小火龙","娑娜-36E","索拉卡-奶妈",
+                 "斯维因-乌鸦","塞拉稀-偷男","星朵拉-球女","塔姆啃奇-老舔","塔利亚-石女","泰隆-刀男","塔里克-奶爸","提莫-队长","色雷西-锤石",
+                 "崔丝塔娜-好想射点什么","特朗德尔-若风","泰达米尔-蛮王","逆命-黄盘大师","图奇-老鼠","乌迪尔-兽男","厄加特-螃蟹","法洛士-V鲁斯",
+                 "氵凡-红眼镜","维嘉-小法司","维克兹-大眼","维克斯-熬夜波比","蔚-女拳斗士","佛爷哥-破败偷男","维克托-三只手","弗拉基米尔-普京","沃利贝尔-数值怪",
+                 "沃里克-狼人","悟空-装甲猴","霞-羽毛女","泽拉斯-尿男","赵信-菊男","亚宿-哈撒给","永恩-他哥","约里克-掘墓","悠米-喵",
+                 "扎克-粑粑","劫-儿童节","泽丽","吉格斯-炸弹人","基佬-时光","佐伊","婕拉-艹女","绘-键盘侠"]
+
+# 位置列表
+top_champions = ["剑魔-天神下凡","阿卡丽-暗影女拳","卡蜜儿-三笠","科加斯-大虫子","达瑞斯-质检员","蒙多-大娘儿们","菲奥娜-JJ","肛普朗克-船长","盖伦-gay轮",
+                "纳尔-如来神掌","古拉加斯-桶男","关-剪刀妹妹","俄洛依-章鱼姨","艾瑞利亚-刀妹","贾克斯-武器","杰西-我黑切呐！","凯尔-天使","凯南-电耗子",
+                "克烈-话痨骑士","奎桑提-尼哥","李青-忙僧","莫菲特-石头人","茂凯-千手柱间","莫得凯撒-铁男","内色斯-狗头","奥拉夫-疯狗bro","奥恩-羊来",
+                "潘森-扎男","波比-波比","奎阴-鸟人","雷尼克顿-鳄鱼","瑞雯雯-龟速QA","兰宝-烧烤王","瑞兹-大魔王","塞特-蒋劲夫","肾-暮肛之眼儿",
+                "莎瓦纳-龙女","辛吉德-炼金","塞恩-八十！八十！","斯卡纳-蝎子","塞拉稀-偷男","塔姆啃奇-老舔","提莫-队长","特朗德尔-若风","泰达米尔-蛮王",
+                "乌迪尔-兽男","厄加特-螃蟹","氵凡-红眼镜","弗拉基米尔-普京","沃利贝尔-数值怪","沃里克-狼人","悟空-装甲猴","永恩-他哥","约里克-掘墓"]
+jungle_champions = ["阿木木-绷带男","被尔围死-八爪鱼","布莱雅-新疯狗","卡蜜儿-三笠","科加斯-大虫子","戴安娜-月女","艾克-刺儿头","伊利斯-蜘蛛","伊芙琳-寡妇",
+                "肥的提克-稻草人","古拉加斯-桶男","格雷福斯-男枪","赫卡里姆-马人","艾翁-鲁迅","嘉文-毒龙钻","贾克斯-武器","卡尔萨斯-死歌","凯隐-明凯",
+                "卡兹克-飞天刀螂","千珏-千玉","莉莉娅-鹿女","莫菲特-石头人","易-老疯狗","奶大丽-豹女","诺克顿-影魔","努努-粪球","奥拉夫-疯狗bro",
+                "琪亚娜-超模","拉莫斯-王八","雷克塞-挖掘机","瑞尔-铁娘儿们","雷恩加尔-大猫","瑟撞你-猪妹","萨科-小丑","乌迪尔-兽男","蔚-女拳斗士",
+                "莎瓦纳-龙女","斯卡纳-蝎子","塔利亚-石女","特朗德尔-若风","图奇-老鼠","佛爷哥-破败偷男","沃利贝尔-数值怪","沃里克-狼人","悟空-装甲猴",
+                "赵信-菊男","扎克-粑粑","绘-键盘侠"]
+mid_champions = ["阿璃-刮痧狐","阿卡丽-暗影女拳","阿克尚-印度男","艾尼维亚-冰鸡","安妮-火女","索尔-龙王","阿滋儿-黄金脆皮鸡","布兰德-火男","卡西奥佩娅-蛇女",
+                "库奇-打飞机","戴安娜-月女","艾克-刺儿头","菲兹-小鱼","加里奥-爸爸抱抱","黑默定格-大头","杰西-我黑切呐！","卡尔马-萨and萨","卡尔萨斯-死歌",
+                "卡萨丁-JB脸","卡特琳娜-转女","勒布朗-妖鸡","丽桑卓-冰女","拉克丝-光女","马儿扎哈-蚂蚱","纳菲利-狗子","妮寇-变形人","奥丽安娜-发条",
+                "琪亚娜-超模","瑞兹-大魔王","塞恩-八十！八十！","斯矛戈-小火龙","斯维因-乌鸦","塞拉稀-偷男","星朵拉-球女","塔利亚-石女","泰隆-刀男",
+                "逆命-黄盘大师","法洛士-V鲁斯","维嘉-小法司","维克斯-熬夜波比","维克托-三只手","弗拉基米尔-普京","泽拉斯-尿男","亚宿-哈撒给","永恩-他哥",
+                "劫-儿童节","吉格斯-炸弹人","基佬-时光","佐伊"]
+adc_champions = ["阿克尚-印度男","亚非64-月男","爱射-含冰射手","凯特琳-女警","库奇-打飞机","德莱文-阿特","Ez-小黄毛","烬-望远镜","金克斯-哒哒哒",
+                "凯莎妹妹","卡莉斯塔-滑板鞋","凯尔-天使","克格莫-深渊大嘴","卢锡安-奥巴马","好运姐-啊哈哈","尼拉-印度女","奎阴-鸟人","沙弥拉",
+                "塞纳","希维尔-轮子妈","斯矛戈-小火龙","提莫-队长","崔丝塔娜-好想射点什么","图奇-老鼠","法洛士-V鲁斯","氵凡-红眼镜","霞-羽毛女",
+                "亚宿-哈撒给","泽丽"]
+support_champions = ["阿利斯塔-老牛","安妮-火女","爱射-含冰射手","巴德-呜哇昂","布里茨-抓男","布兰德-火男","不聋-盾男","珈衲-风女","卡尔马-萨and萨",
+                "蕾欧娜-日女","露露","拉克丝-光女","茂凯-千手柱间","米利欧-丁真","莫干那","娜美-唤潮鲛肌","诺提勒斯-泰坦","妮寇-变形人",
+                "派克-潜水员","洛-羽毛男","瑞尔-铁娘儿们","瑞纳塔","塞纳","萨乐芬妮-亲闺女","娑娜-36E","索拉卡-奶妈","斯维因-乌鸦",
+                "塔姆啃奇-老舔","塔里克-奶爸","色雷西-锤石","维嘉-小法司","维克兹-大眼","泽拉斯-尿男","悠米-喵","吉格斯-炸弹人","基佬-时光",
+                "婕拉-艹女","绘-键盘侠"]
+
+
+class RandomMatchApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("中老年召唤师们，扔掉拐杖，放下保温杯，举起关节炎的双手来战斗吧！！！")
+
+        self.team1 = []
+        self.team2 = []
+
+        # 设置初始字体
+        self.font_large = ("Helvetica", 20)
+        self.font_button = ("Helvetica", 16)
+
+        # 创建显示窗口框架
+        self.display_frame1 = tk.Frame(root)
+        self.display_frame1.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+
+        self.display_frame2 = tk.Frame(root)
+        self.display_frame2.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
+
+        # 创建显示窗口
+        self.display1 = tk.Text(self.display_frame1, height=15, width=5, font=self.font_large)
+        self.display1.pack(fill=tk.BOTH, expand=True)
+
+        self.display2 = tk.Text(self.display_frame2, height=15, width=5, font=self.font_large)
+        self.display2.pack(fill=tk.BOTH, expand=True)
+
+        # 创建按钮框架
+        self.button_frame1 = tk.Frame(root)
+        self.button_frame1.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
+
+        self.button_frame2 = tk.Frame(root)
+        self.button_frame2.grid(row=1, column=2, padx=10, pady=10, sticky="nsew")
+
+        # 创建控制按钮框架
+        self.control_frame = tk.Frame(root)
+        self.control_frame.grid(row=2, column=0, columnspan=3, pady=10, sticky="nsew")
+
+        self.start_button = tk.Button(self.control_frame, text="来战个痛！RUA！", font=self.font_button, command=self.generate_matches)
+        self.start_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=10)
+
+        self.clear_button = tk.Button(self.control_frame, text="少侠重新来过", font=self.font_button, command=self.clear_teams)
+        self.clear_button.pack(side=tk.RIGHT, fill=tk.X, expand=True, padx=10)
+
+        positions = ["上", "野", "中", "ad吸", "辅", "全"]
+
+        self.add_buttons1 = []
+        self.add_buttons2 = []
+
+        # 使用 lambda 表达式确保传递函数引用而不是立即调用
+        for i in range(6):
+            btn1 = tk.Button(self.button_frame1, text=positions[i], font=self.font_button, command=lambda pos=i: self.add_champion(1, pos))
+            btn1.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
+            self.add_buttons1.append(btn1)
+
+            btn2 = tk.Button(self.button_frame2, text=positions[i], font=self.font_button, command=lambda pos=i: self.add_champion(2, pos))
+            btn2.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
+            self.add_buttons2.append(btn2)
+
+        # 配置行和列权重，以便窗口调整大小时，组件可以正确扩展
+        for i in range(3):
+            self.root.grid_rowconfigure(i, weight=1)
+        self.root.grid_columnconfigure(0, weight=1)
+        self.root.grid_columnconfigure(1, weight=0)
+        self.root.grid_columnconfigure(2, weight=1)
+
+        # 绑定窗口大小变化事件
+        self.root.bind("<Configure>", self.on_resize)
+
+    def on_resize(self, event):
+        # 确保事件不会导致循环调整
+        if event.widget == self.root:
+            new_font_size = max(10, min(event.width // 30, event.height // 30))
+            self.font_large = ("Helvetica", new_font_size)
+            self.font_button = ("Helvetica", new_font_size - 4)
+
+            self.display1.config(font=self.font_large)
+            self.display2.config(font=self.font_large)
+            self.start_button.config(font=self.font_button)
+            self.clear_button.config(font=self.font_button)
+
+            for btn in self.add_buttons1:
+                btn.config(font=self.font_button)
+
+            for btn in self.add_buttons2:
+                btn.config(font=self.font_button)
+
+    def generate_matches(self):
+        self.team1 = random.sample(all_champions, 1)
+        self.team2 = random.sample([champ for champ in all_champions if champ not in self.team1], 1)
+
+#        self.display1.delete(1.0, tk.END)
+#        self.display2.delete(1.0, tk.END)
+
+        for champ in self.team1:
+            self.display1.insert(tk.END, champ + "\n")
+
+        for champ in self.team2:
+            self.display2.insert(tk.END, champ + "\n")
+
+    def add_champion(self, team, position_index):
+        champions_list = [top_champions, jungle_champions, mid_champions, adc_champions, support_champions, all_champions]
+        new_champ = random.choice([champ for champ in champions_list[position_index] if champ not in self.team1 and champ not in self.team2])
+        if team == 1:
+            self.team1.append(new_champ)
+            self.display1.insert(tk.END, new_champ + "\n")
+        else:
+            self.team2.append(new_champ)
+            self.display2.insert(tk.END, new_champ + "\n")
+
+    def clear_teams(self):
+        self.team1 = []
+        self.team2 = []
+        self.display1.delete(1.0, tk.END)
+        self.display2.delete(1.0, tk.END)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = RandomMatchApp(root)
+    root.mainloop()
